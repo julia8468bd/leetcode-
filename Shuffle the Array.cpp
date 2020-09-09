@@ -7,9 +7,10 @@ class Solution {
 public:
     vector<int> shuffle(vector<int>& nums, int n) {
         int count = 0;
-        vector<int> result(n*2);
+        vector<int> result(n*2); //創建大小為2n的新空矩陣
+
         for (int i = 0; i < result.size(); i++) {
-            for (int j = i; j < result.size() && count < result.size() ; j = j + n) {
+            for (int j = i; j < result.size() && count < result.size() ; j = j + n) { //從0開始跳n格取值、1跳n格取值...
                 result[count] = nums[j];
                 count = count + 1;
             }
