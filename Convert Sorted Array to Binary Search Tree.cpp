@@ -26,30 +26,32 @@ public:
 
 	TreeNode* build_tree(TreeNode* root, vector<int>& nums, int l, int r) {
 		if (l > r) {
-			return NULL;
+			return NULL;	//若左位置>右位置，回傳NULL
 		}
-		int m = (l + r + 1) / 2;
+		int m = (l + r + 1) / 2;	//紀錄中間位置
 		root = new TreeNode(0);
 		root->val = nums[m];
 		
-		root->left = build_tree(root->left, nums, l, (l + r + 1) / 2 - 1);
-		root->right = build_tree(root->right, nums, (l + r + 1) / 2 + 1, r);
+		root->left = build_tree(root->left, nums, l, m - 1);	//遞迴左子樹(最右~中間-1)
+		root->right = build_tree(root->right, nums, m + 1, r);  //遞迴右子樹(中間+1~最左)
 		
 		return root;
 	}
 
-	void Levelorder(TreeNode* root) {
+	void Levelorder(TreeNode* root) {		//為了用Levelorder印出樹
 		queue<TreeNode*> q;
 		q.push(root);
-		while (!q.empty()) {                    // 若queue不為空，有node還未走訪
-			TreeNode *current = q.front();      
-			q.pop();							// 取出先進入queue的node
-			if (current->left != NULL) {		// 若左有資料, 進queue
+		while (!q.empty()) {				// 若queue不為空，有node還未走訪
+			TreeNode *current = q.front();  // 取出先進入queue的node
+			q.pop();						
+			if (current->left != NULL) {	// 若左有資料, 進queue
 				q.push(current->left);
 			}
-			if (current->right != NULL) {		// 若右有資料, 進queue
+
+			if (current->right != NULL) {	// 若右有資料, 進queue
 				q.push(current->right);
 			}
+
 			result.push_back(current->val);
 		}
 	}
@@ -62,8 +64,9 @@ int main() {
 	s.Levelorder(s.sortedArrayToBST(nums));
 
 	for (int i = 0; i < result.size(); i++) {
-		cout << ' ' << result[i];
+		cout << result[i] << ' ';
 	}
+	cout << endl;
 	system("pause");
 }
 
